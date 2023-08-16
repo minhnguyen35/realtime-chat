@@ -34,11 +34,11 @@
                 </button>
               </div>
               <div class="card-body" data-mdb-perfect-scrollbar="true">
-                {% for msg in messages %}
-                
+                {% for name, msg in user_messages.items %}
+                {% if name != user_name %}
                 <div class="d-flex justify-content-between">
-                  <p class="small mb-1"> {{ msg.user_name }}</p>
-                  <p class="small mb-1 text-muted">{{ msg.timestamp }}</p>
+                  <p class="small mb-1"> {{ name }}</p>
+                  <p class="small mb-1 text-muted">{{ msg.0.timestamp }}</p>
                 </div>
                 <div class="d-flex flex-row justify-content-start">
                   <img
@@ -47,98 +47,33 @@
                     style="width: 45px; height: 100%"
                   />
                   <div>
+                    {% for m in msg %}
                     <p
                       class="small p-2 ms-3 mb-1 rounded-3"
                       style="background-color: #f5f6f7"
                     >
-                      {{msg.content}}
+                      {{ m.content }}
                     </p>
+                    {% endfor %}
                   </div>
                 </div>
                 <br>
-                
+                {% else %}
+                <div class="d-flex justify-content-end">
+                  <p class="small mb-1 text-muted">{{ msg.0.timestamp }}</p>
+                </div>
+                <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+                  {% for m in msg %}
+                  <p
+                    class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
+                  >
+                    {{ m.content }}
+                  </p>
+                  {% endfor %}
+                </div>
+                {% endif %}
                 {% endfor %}
-                {% comment %} <div class="d-flex justify-content-between">
-                  <p class="small mb-1 text-muted">23 Jan 2:05 pm</p>
-                  <p class="small mb-1">Johny Bullock</p>
-                </div>
-                <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                  <div>
-                    <p
-                      class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
-                    >
-                      Hiii, I'm good.
-                    </p>
-                    <p
-                      class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
-                    >
-                      How are you doing?
-                    </p>
-                    <p
-                      class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
-                    >
-                      Long time no see! Tomorrow office. will be free on sunday.
-                    </p>
-                  </div>
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                    alt="avatar 1"
-                    style="width: 45px; height: 100%"
-                  />
-                </div>
-
-                <div class="d-flex flex-row justify-content-start mb-4">
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                    alt="avatar 1"
-                    style="width: 45px; height: 100%"
-                  />
-                  <div>
-                    <p
-                      class="small p-2 ms-3 mb-1 rounded-3"
-                      style="background-color: #f5f6f7"
-                    >
-                      Sorry I don't have. i changed my phone.
-                    </p>
-                    <p
-                      class="small p-2 ms-3 mb-1 rounded-3"
-                      style="background-color: #f5f6f7"
-                    >
-                      Could you please give me yours?
-                    </p>
-                    <p class="small ms-3 mb-3 rounded-3 text-muted">00:13</p>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                    <div>
-                      <p
-                        class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
-                      >
-                        Hiii, I'm good.
-                      </p>
-                      <p
-                        class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
-                      >
-                        How are you doing?
-                      </p>
-                      <p
-                        class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
-                      >
-                        Long time no see! Tomorrow office. will be free on sunday.
-                      </p>
-                      <p
-                        class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end"
-                      >
-                        00:06
-                      </p>
-                    </div>
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                      alt="avatar 1"
-                      style="width: 45px; height: 100%"
-                    />
-                  </div> {% endcomment %}
+                
               </div>
               <div
                 class="card-footer text-muted d-flex justify-content-start align-items-center p-3"
@@ -164,7 +99,7 @@
         </div>
       </div>
     </section>
-    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'chat.js' %}"></script>
   </body>
 </html>

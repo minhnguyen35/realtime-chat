@@ -29,12 +29,20 @@ def room_name(request, room_name):
         DummyMessage("Happy Monkey", "Hello World 2", "Rhino", (now - timedelta(minutes=0)).strftime("%H:%M:%S")),
         DummyMessage("Happy Monkey", "Hello World 3", "Hippo", (now - timedelta(minutes=0)).strftime("%H:%M:%S")),
         DummyMessage("Happy Monkey", "Hello World 4", "Rhino", (now - timedelta(minutes=10)).strftime("%H:%M:%S")),
-        DummyMessage("Happy Monkey", "Hello World 5", "Hippo", (now - timedelta(minutes=15)).strftime("%H:%M:%S")),
+        DummyMessage("Happy Monkey", "cras ornare arcu dui vivamus arcu felis bibendum ut tristique", "Rhino", (now - timedelta(minutes=15)).strftime("%H:%M:%S")),
         DummyMessage("Happy Monkey", "Hello World 6", "Rhino", (now - timedelta(minutes=20)).strftime("%H:%M:%S")),
-        DummyMessage("Happy Monkey", "Hello World 7", "Hippo", (now - timedelta(minutes=30)).strftime("%H:%M:%S")),
+        DummyMessage("Happy Monkey", "Hello World 7", "John", (now - timedelta(minutes=30)).strftime("%H:%M:%S")),
     ]
+    userMsgs = dict()
+    for msg in listMsg:
+        if msg.user_name in userMsgs:
+            userMsgs[msg.user_name].append(msg)
+        else:
+            userMsgs[msg.user_name] = [msg]
+
     context = {
+        'user_name': user_name,
         'room_name': room_name,
-        'messages': listMsg
+        'user_messages': userMsgs
     }
     return render(request, 'mainApp/room.html', context)
