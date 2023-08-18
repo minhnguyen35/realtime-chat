@@ -32,6 +32,7 @@ def room_name(request, room_name):
         DummyMessage("Happy Monkey", "cras ornare arcu dui vivamus arcu felis bibendum ut tristique", "Rhino", (now - timedelta(minutes=15)).strftime("%H:%M:%S")),
         DummyMessage("Happy Monkey", "Hello World 6", "Rhino", (now - timedelta(minutes=20)).strftime("%H:%M:%S")),
         DummyMessage("Happy Monkey", "Hello World 7", "John", (now - timedelta(minutes=30)).strftime("%H:%M:%S")),
+        DummyMessage("Happy Monkey", "Hello vivamus arcu felis bibendum ut tristique", "John", (now - timedelta(minutes=0)).strftime("%H:%M:%S")),
     ]
     userMsgs = dict()
     for msg in listMsg:

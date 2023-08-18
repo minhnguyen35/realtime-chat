@@ -23,7 +23,8 @@
               <div
                 class="card-header d-flex justify-content-between align-items-center p-3"
               >
-                <h5 class="mb-0">{{ room_name }}</h5>
+                <p hidden id="id_name">{{ user_name }}</p>
+                <h5 class="mb-0" id="room-name">{{ room_name }}</h5>
                 <button
                   type="button"
                   class="btn btn-primary btn-sm"
@@ -33,7 +34,7 @@
                   Edit Room Name
                 </button>
               </div>
-              <div class="card-body" data-mdb-perfect-scrollbar="true">
+              <div class="card-body" data-mdb-perfect-scrollbar="true" id="main_container">
                 {% for name, msg in user_messages.items %}
                 {% if name != user_name %}
                 <div class="d-flex justify-content-between">
@@ -48,12 +49,12 @@
                   />
                   <div>
                     {% for m in msg %}
-                    <p
+                    <div
                       class="small p-2 ms-3 mb-1 rounded-3"
                       style="background-color: #f5f6f7"
                     >
                       {{ m.content }}
-                    </p>
+                  </div>
                     {% endfor %}
                   </div>
                 </div>
@@ -63,13 +64,17 @@
                   <p class="small mb-1 text-muted">{{ msg.0.timestamp }}</p>
                 </div>
                 <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+                  <div>
+                  
                   {% for m in msg %}
-                  <p
+                  <div 
                     class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
                   >
                     {{ m.content }}
-                  </p>
+                
+                  </div>
                   {% endfor %}
+                </div>
                 </div>
                 {% endif %}
                 {% endfor %}
