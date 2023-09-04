@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpRequest
 
 from .forms import NameForm
 from .models import Room, Message, DummyMessage
 from datetime import datetime, timedelta
+
 # Create your views here.
 def index(request):
     return render(request, 'mainApp/index.html')
@@ -47,3 +48,10 @@ def room_name(request, room_name):
         'user_messages': userMsgs
     }
     return render(request, 'mainApp/room.html', context)
+
+def homepage(request: HttpRequest):
+    if 'email' not in request.session:
+        request.session.clear()
+        return redirect('authentication:login')
+    email = request.session['email']
+    return render(request, 'mainApp/homepage.html', {'email':email})

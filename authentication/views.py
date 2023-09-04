@@ -7,24 +7,28 @@ from .constants import DB_Status
 
 # Create your views here.
 def login(request: HttpRequest):
+    if 'email' in request.session:
+        return redirect('mainApp:homepage')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             status = VerifyLoginUseCase().execute(data['email'], data['password'])
             if status == DB_Status.SUCCESS:
-                return HttpResponse("Login Success")
+                request.session['email'] = data['email']
+                return redirect('mainApp:homepage')
             elif status == DB_Status.WRONG_PASSWORD or status == DB_Status.NOT_FOUND:
                 form.add_error('email', 'Your email or password is incorrect.')
+                form.add_error('password', 'Your email or password is incorrect.')
             return render(request, "authentication/login.html", {'form': form})
                 
     return render(request, "authentication/login.html", {'form': LoginForm(None)})
 
 def logout(request: HttpRequest):
-    return render(request, 'authentication/logout.html')
+    del request.session['email']
+    return redirect('mainApp:index')
 
 def register(request: HttpRequest):
-    print('method: ', request.method)
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
