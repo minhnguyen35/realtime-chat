@@ -1,14 +1,27 @@
 from django.db import models
-
+from authentication.models import Users
 # Create your models here.
-class Room(models.Model):
-    room_name = models.CharField(max_length=40)
-
-class Message(models.Model):
-    room_name = models.ForeignKey(Room, on_delete=models.CASCADE)
+class Conversations(models.Model):
+    name = models.CharField(max_length=40)
+    created_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ['name']
+        indexes = [
+            models.Index(fields=["name"], name="conversation_name")
+        ]
+class User_Conversations(models.Model):
+    user_email = models.ForeignKey(Users, on_delete=models.CASCADE)
+    conversation_id = models.ForeignKey(Conversations, on_delete=models.CASCADE)
+class Messages(models.Model):
+    conversation_id = models.ForeignKey(Conversations, on_delete=models.CASCADE)
     content = models.CharField(max_length=200)
-    user_name = models.CharField(max_length=30)
-    timestamp = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=["content"], name="content")
+        ]
 
 class DummyMessage():
     def __init__(self, room_name, content, user_name, timestamp) -> None:

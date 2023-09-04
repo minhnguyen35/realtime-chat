@@ -16,16 +16,23 @@
       </div>
     </div>
   </nav>
-  <div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="mt-5 container vh-100 d-flex justify-content-center align-items-top">
 
-    <div class="list-group w-100">
-      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+    <div class="list-group w-70">
+      {% for c in conversations %}
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1 text-primary">{{ c.name }}</h5>
+            <!-- <small>3 days ago</small> -->
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+        </a>
+      {% endfor %}
+      <!-- <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">List group item heading</h5>
-          <small>3 days ago</small>
+          <h5 class="mb-1">{{ c.name }}</h5>
         </div>
         <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small>Donec id elit non mi porta.</small>
       </a>
       <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
@@ -33,7 +40,6 @@
           <small class="text-muted">3 days ago</small>
         </div>
         <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
       </a>
       <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
@@ -41,9 +47,29 @@
           <small class="text-muted">3 days ago</small>
         </div>
         <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
-      </a>
+      </a> -->
     </div>
+    <div class="m-3 w-30 align-items-center">
+      <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="{% url 'mainApp:homepage' %}">
+        {% csrf_token %}
+        <h3>Create New Conversation</h3>
+        <div class="form-floating mb-3">
+          <input
+            class="form-control"
+            id="room_name"
+            placeholder="Room Name"
+            name='room_name'
+            maxlength="30"
+            minlength="1"
+          />
+          <label for="floatingRoomname">Room Name</label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">
+          Start chat!
+        </button>
+      </form>
+    </div>
+    
   </div>
 
 {% endblock content %}

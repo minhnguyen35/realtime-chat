@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 
 from .forms import NameForm
-from .models import Room, Message, DummyMessage
+from .models import DummyMessage
 from datetime import datetime, timedelta
-
+from .domain import LoadConversations, CreateNewConversation
 # Create your views here.
 def index(request):
     return render(request, 'mainApp/index.html')
@@ -54,4 +54,12 @@ def homepage(request: HttpRequest):
         request.session.clear()
         return redirect('authentication:login')
     email = request.session['email']
-    return render(request, 'mainApp/homepage.html', {'email':email})
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+        room_name = form.data['room_name']
+        c_id = CreateNewConversation().execute(email, room_name)
+        
+        # return render(request, 'mainApp/homepage.html', {'email':email, 'conversations': None})
+    # else:
+    allConversations = LoadConversations().execute(email)
+    return render(request, 'mainApp/homepage.html', {'email':email, 'conversations': allConversations})
